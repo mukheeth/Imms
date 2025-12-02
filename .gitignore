@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+*.jsonl
+.env
+.venv
+venv/
+myenv/
+
+# Java
+target/
+*.class
+*.jar
+*.war
+.mvn/
+
+# Node
+node_modules/
+dist/
+build/
+.env.local
+.env.production
+.env.development
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Sensitive files
+*.log
+*.jsonl
+.env
+application-local.properties
+
+# Frontend build
+imm/Enterprise Medical Management UI/dist/
+imm/Enterprise Medical Management UI/.env.local
+imm/Enterprise Medical Management UI/.env.production
+
