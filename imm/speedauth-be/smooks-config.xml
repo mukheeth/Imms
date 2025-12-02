@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<smooks-resource-list xmlns="http://www.milyn.org/xsd/smooks-1.0.xsd">
+    <!-- EDI Message Transformation -->
+    <edi:edi-to-java
+        xmlns:edi="http://www.milyn.org/xsd/edi-1.0.xsd"
+        version="EDIFACT"
+        segmentSeparator="\'">
+        <!-- Patient Details Segment -->
+        <edi:segment name="PATIENT">
+            <edi:element name="PID" value="patient.customPatientId"/>
+            <edi:element name="Name" value="patient.fullName"/>
+            <edi:element name="DOB" value="patient.dateOfBirth"/>
+            <edi:element name="Gender" value="patient.gender"/>
+            <edi:element name="Insurance" value="patient.primaryInsurance"/>
+            <edi:element name="Policy" value="patient.primaryPolicyNumber"/>
+            <edi:element name="Contact" value="patient.contactNumber"/>
+        </edi:segment>
+    </edi:edi-to-java>
+</smooks-resource-list>

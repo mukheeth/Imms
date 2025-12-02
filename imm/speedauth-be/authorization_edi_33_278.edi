@@ -1,0 +1,13 @@
+ISA*00*          *00*          *ZZ*YOURGSID      *ZZ*INSURANCE       *20250131*ZZ*
+GS*HS*YOURGSID*INSURANCE*20250131*1*X*005010X217
+ST*278*0001
+BHT*0010*00*12345*20010101*123456*CH
+NM1*PR*2*null*null****ABC Health Insurance
+REF*YZ*null
+HL*1**1*0*0*
+PAT*AAA*ZZZ*19850720*null*
+CLM*PAT001*null*1*100**01
+HI*B9*ICD-12.167*
+SV1*HC:J3677*100*UN
+NM1*85*Essential Solutions*1234 Health St, Some City, Some State*
+NM1*PI*ABC Health Insurance*

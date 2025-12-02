@@ -1,0 +1,51 @@
+{
+    "case_id": "58",
+    "patient_name": "S, Divya",
+    "admission_date": "2024-07-20",
+    "primary_diagnosis": "N91.2 - Amenorrhea, unspecified",
+    "facility": "City General Hospital",
+    "total_authorized": "R 15,000",
+    "used_amount": "R 3,500",
+    "percentage_used": "23%",
+    "length_of_stay": "Outpatient or 1 day",
+    "procedures_count": 3,
+    "authorizations_count": 1,
+    "alerts_count": 0,
+    "case_summary": "Patient admitted for evaluation of amenorrhea. Initial workup to include hormonal assays, pelvic ultrasound, and specialist consultation to determine underlying etiology. Focus on identifying primary or secondary causes.",
+    "recommended_care_plan": "Comprehensive diagnostic workup including hormonal panel (FSH, LH, Prolactin, TSH, Estradiol), pelvic ultrasound, and gynecological consultation. Depending on findings, further imaging (MRI) or genetic testing may be required. Patient education on lifestyle factors.",
+    "expected_length_of_stay": "Outpatient (diagnostic visit) or 1 day (if inpatient for rapid workup)",
+    "required_procedures": [
+        {
+            "code": "84403",
+            "description": "FSH level",
+            "urgency": "Routine",
+            "estimated_duration": "15 minutes"
+        },
+        {
+            "code": "84443",
+            "description": "TSH level",
+            "urgency": "Routine",
+            "estimated_duration": "15 minutes"
+        },
+        {
+            "code": "76856",
+            "description": "Ultrasound, pelvic (nonobstetric), transabdominal",
+            "urgency": "Routine",
+            "estimated_duration": "30 minutes"
+        },
+        {
+            "code": "99204",
+            "description": "Office or other outpatient visit for the evaluation and management of a new patient",
+            "urgency": "High",
+            "estimated_duration": "45 minutes"
+        }
+    ],
+    "prosthesis_needed": null,
+    "authorization_required": true,
+    "care_level": "Outpatient Clinic / Medical/Surgical Unit",
+    "estimated_cost_range": "R 5,000 - R 20,000",
+    "discharge_planning_notes": "Ensure follow-up appointment with Gynaecologist is scheduled. Provide patient education on potential causes and importance of adherence to diagnostic plan. Monitor for results of initial tests.",
+    "risk_factors": [
+        "Hormonal imbalance",
+        "Nutritional deficiencies",
+        "Stress",
