@@ -1,15 +1,17 @@
 FROM eclipse-temurin:17-jdk-jammy AS build
 WORKDIR /app
 
-# Copy Maven wrapper and pom
-COPY mvnw* pom.xml ./
-COPY .mvn .mvn
+# Install Maven (since .mvn folder might be missing)
+RUN apt-get update && apt-get install -y maven && rm -rf /var/lib/apt/lists/*
+
+# Copy pom.xml first for dependency caching
+COPY pom.xml ./
 
 # Copy source
 COPY src src
 
 # Build the application (skip tests for faster builds)
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
 
 # ---- Runtime stage ----
 FROM eclipse-temurin:17-jre-jammy
