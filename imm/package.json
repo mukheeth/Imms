@@ -11,7 +11,6 @@
     "@types/node": "^16.18.126",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
-    "@vitejs/plugin-react-swc": "^4.1.0",
     "axios": "^1.12.2",
     "lucide-react": "^0.487.0",
     "react": "^19.2.0",
@@ -44,8 +43,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@vitejs/plugin-react": "^5.0.4"
   }
 }
