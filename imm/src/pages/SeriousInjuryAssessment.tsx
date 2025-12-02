@@ -372,9 +372,9 @@ function SeriousInjuryAssessmentPage({ onNavigate }: SeriousInjuryAssessmentPage
 
       setPlanError(null);
       setPlanLoading(true);
-      console.log('✅ Calling API: http://localhost:5053/generate-discharge-plan-groq');
+      console.log(`✅ Calling API: ${DISCHARGE_API}/generate-discharge-plan-groq`);
 
-      const response = await fetch('http://localhost:5053/generate-discharge-plan-groq', {
+      const response = await fetch(`${DISCHARGE_API}/generate-discharge-plan-groq`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
