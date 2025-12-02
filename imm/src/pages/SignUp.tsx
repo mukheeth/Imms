@@ -21,7 +21,8 @@ function SignUp({ onNavigate }: Props) {
     if (!validatePassword(formData.password)) { setError('Password must be at least 6 characters long.'); return; }
     setBusy(true); setError('');
     try {
-      const res = await fetch('http://localhost:8082/user/signup', {
+      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8082';
+      const res = await fetch(`${apiBaseUrl}/user/signup`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),

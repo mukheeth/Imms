@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8082';
+
 type PreAuthProps = {
   onNavigate?: (route: 'serious-injury') => void;
 };
@@ -43,7 +45,7 @@ function PreAuthorizationRequest({ onNavigate }: PreAuthProps) {
       };
 
       console.log('Saving order:', orderPayload);
-      const orderRes = await fetch('http://localhost:8082/orders/write', {
+      const orderRes = await fetch(`${API_BASE_URL}/orders/write`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(orderPayload),
@@ -77,7 +79,7 @@ function PreAuthorizationRequest({ onNavigate }: PreAuthProps) {
         };
 
         console.log('Saving patient:', patientPayload);
-        const patientRes = await fetch('http://localhost:8082/patient/write', {
+        const patientRes = await fetch(`${API_BASE_URL}/patient/write`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(patientPayload),
@@ -100,7 +102,7 @@ function PreAuthorizationRequest({ onNavigate }: PreAuthProps) {
         };
 
         console.log('Saving provider:', providerPayload);
-        const providerRes = await fetch('http://localhost:8082/provider/write', {
+        const providerRes = await fetch(`${API_BASE_URL}/provider/write`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(providerPayload),
@@ -126,7 +128,7 @@ function PreAuthorizationRequest({ onNavigate }: PreAuthProps) {
         };
 
         console.log('Saving insurance:', insurancePayload);
-        const insuranceRes = await fetch('http://localhost:8082/insurance/write', {
+        const insuranceRes = await fetch(`${API_BASE_URL}/insurance/write`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(insurancePayload),
@@ -181,7 +183,7 @@ function PreAuthorizationRequest({ onNavigate }: PreAuthProps) {
         };
 
         try {
-          const updateRes = await fetch(`http://localhost:8082/patient/editpatient?customPatientId=${encodeURIComponent(patientId)}`, {
+          const updateRes = await fetch(`${API_BASE_URL}/patient/editpatient?customPatientId=${encodeURIComponent(patientId)}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updatePatientPayload),
@@ -217,7 +219,7 @@ function PreAuthorizationRequest({ onNavigate }: PreAuthProps) {
 
         try {
           console.log('Creating patient with payload:', createPatientPayload);
-          const patientRes = await fetch('http://localhost:8082/patient/write', {
+          const patientRes = await fetch(`${API_BASE_URL}/patient/write`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(createPatientPayload),
@@ -251,7 +253,7 @@ function PreAuthorizationRequest({ onNavigate }: PreAuthProps) {
         };
 
         try {
-          const updateRes = await fetch(`http://localhost:8082/provider/edit/${providerNPI}`, {
+          const updateRes = await fetch(`${API_BASE_URL}/provider/edit/${providerNPI}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updateProviderPayload),
@@ -279,7 +281,7 @@ function PreAuthorizationRequest({ onNavigate }: PreAuthProps) {
 
         try {
           console.log('Creating provider with payload:', createProviderPayload);
-          const providerRes = await fetch('http://localhost:8082/provider/write', {
+          const providerRes = await fetch(`${API_BASE_URL}/provider/write`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(createProviderPayload),
@@ -308,7 +310,7 @@ function PreAuthorizationRequest({ onNavigate }: PreAuthProps) {
       };
       let insuranceIdFinal = insuranceIdAuth;
       if (insuranceId) {
-        const insUp = await fetch(`http://localhost:8082/insurance/update?customInsuranceId=${encodeURIComponent(insuranceId)}`, {
+        const insUp = await fetch(`${API_BASE_URL}/insurance/update?customInsuranceId=${encodeURIComponent(insuranceId)}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(insurancePayload),
@@ -343,7 +345,7 @@ function PreAuthorizationRequest({ onNavigate }: PreAuthProps) {
 
         try {
           // Try create-full endpoint first (handles all relationships)
-          const authRes = await fetch('http://localhost:8082/authorizations/create-full', {
+          const authRes = await fetch(`${API_BASE_URL}/authorizations/create-full`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(authorizationData),
@@ -447,7 +449,7 @@ function PreAuthorizationRequest({ onNavigate }: PreAuthProps) {
   const getPat = async () => {
     try {
       if (!patientId) return;
-      const ordersRes = await fetch(`http://localhost:8082/orders/exists?patId=${patientId}`);
+      const ordersRes = await fetch(`${API_BASE_URL}/orders/exists?patId=${patientId}`);
       const orders = ordersRes.ok ? await ordersRes.json() : [];
       if (orders.length > 0) {
         const firstOrder = orders[0];
@@ -472,7 +474,7 @@ function PreAuthorizationRequest({ onNavigate }: PreAuthProps) {
 
         // Fetch provider with local NPI to avoid async state timing
         if (nextNpi) {
-          const providerRes = await fetch(`http://localhost:8082/provider?npiNumber=${nextNpi}`);
+          const providerRes = await fetch(`${API_BASE_URL}/provider?npiNumber=${nextNpi}`);
           if (providerRes.ok) {
             const pr = await providerRes.json();
             setProviderName(pr.providerName || '');
@@ -486,7 +488,7 @@ function PreAuthorizationRequest({ onNavigate }: PreAuthProps) {
         // Fetch insurance with local id as needed
         if (nextInsuranceId) {
           try {
-            const insRes = await fetch(`http://localhost:8082/insurance/fetch?customInsuranceId=${nextInsuranceId}`);
+            const insRes = await fetch(`${API_BASE_URL}/insurance/fetch?customInsuranceId=${nextInsuranceId}`);
             if (insRes.ok) {
               const insuranceData = await insRes.json();
               setInsuranceIdAuth(insuranceData.insuranceId ?? null);
@@ -501,7 +503,7 @@ function PreAuthorizationRequest({ onNavigate }: PreAuthProps) {
         }
       }
 
-      const patientRes = await fetch(`http://localhost:8082/patient/${patientId}`);
+      const patientRes = await fetch(`${API_BASE_URL}/patient/${patientId}`);
       if (patientRes.ok) {
         const p = await patientRes.json();
         setPatientName(p.fullName || '');
@@ -540,7 +542,7 @@ function PreAuthorizationRequest({ onNavigate }: PreAuthProps) {
       }
       setPatientLoading(true);
       try {
-        const res = await fetch(`http://localhost:8082/patient/search?query=${encodeURIComponent(q)}`, { signal: controller.signal });
+        const res = await fetch(`${API_BASE_URL}/patient/search?query=${encodeURIComponent(q)}`, { signal: controller.signal });
         if (res.ok) {
           const data = await res.json();
           setPatientOptions(Array.isArray(data) ? data : []);

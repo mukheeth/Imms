@@ -18,7 +18,8 @@ function SignIn({ onNavigate }: Props) {
     if (!validateEmail(formData.email)) { setError('Invalid email format.'); return; }
     if (!validatePassword(formData.password)) { setError('Password must be at least 6 characters long.'); return; }
     try {
-      const url = new URL('http://localhost:8082/user/signinrole');
+      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8082';
+      const url = new URL(`${apiBaseUrl}/user/signinrole`);
       url.searchParams.set('email', formData.email);
       url.searchParams.set('password', formData.password);
       const res = await fetch(url.toString(), { method: 'POST' });
@@ -28,7 +29,7 @@ function SignIn({ onNavigate }: Props) {
       try { localStorage.setItem('userEmail', formData.email); } catch {}
       // Optionally fetch username (same as speedauth behavior)
       try {
-        const u = new URL('http://localhost:8082/user/username');
+        const u = new URL(`${apiBaseUrl}/user/username`);
         u.searchParams.set('email', formData.email);
         await fetch(u.toString());
       } catch {}

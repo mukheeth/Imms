@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { apiService, SeriousInjuryAssessment } from '../services/api';
 
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8082';
+const HOSPITAL_CASE_API = process.env.REACT_APP_HOSPITAL_CASE_API || 'http://localhost:5052';
+const DISCHARGE_API = process.env.REACT_APP_DISCHARGE_API || 'http://localhost:5053';
+
 const DISCHARGE_PLAN_KEY = 'imms.dischargePlan';
 const DISCHARGE_CONTEXT_KEY = 'imms.dischargePlanContext';
 const DISCHARGE_META_KEY = 'imms.dischargePlanMeta';
@@ -237,7 +241,7 @@ function SeriousInjuryAssessmentPage({ onNavigate }: SeriousInjuryAssessmentPage
       // Fetch from authorizations endpoint
       let authorizationRows: SeriousInjuryAssessment[] = [];
       try {
-        const res = await fetch('http://localhost:8082/authorizations');
+        const res = await fetch(`${API_BASE_URL}/authorizations`);
         if (res.ok) {
           const data = await res.json();
           authorizationRows = (data || []).map((auth: any) => {
@@ -434,7 +438,7 @@ function SeriousInjuryAssessmentPage({ onNavigate }: SeriousInjuryAssessmentPage
         patient_name: selectedAssessment.patientName,
         case_id: selectedAssessment.caseId,
       };
-      const resp = await fetch('http://localhost:5052/generate-case-summary-groq', {
+      const resp = await fetch(`${HOSPITAL_CASE_API}/generate-case-summary-groq`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
