@@ -92,8 +92,10 @@ public class UserServiceImpl implements UserService {
     public RolesEntity signInRole(String email, String password) {
         UserEntity existingUser = userRepo.findByEmail(email);
         if (existingUser != null && existingUser.getPassword().equals(password)) {
-            return existingUser.getRole_type();
-
+            RolesEntity role = existingUser.getRole_type();
+            // If user has no role, return a default role or null
+            // For now, return null and let controller handle it
+            return role;
         }
         return null;
     }

@@ -16,6 +16,8 @@ import com.insurance.percert.model.RolesEntity;
 import com.insurance.percert.model.UserEntity;
 import com.insurance.percert.service.UserService;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/user")
 @CrossOrigin(origins = "*") // Replace with your frontend URL
@@ -74,13 +76,29 @@ public class UserController {
     }
 
     @PostMapping("/signinrole")
-    public RolesEntity signInRole(@RequestParam String email,
+    public ResponseEntity<?> signInRole(@RequestParam String email,
             @RequestParam String password) {
-        RolesEntity existingUser = userService.signInRole(email, password);
-        if (existingUser != null) {
-            return existingUser;
-        } else {
-            throw new IllegalArgumentException("Invalid email or password");
+        try {
+            RolesEntity role = userService.signInRole(email, password);
+            if (role != null) {
+                return ResponseEntity.ok(role);
+            } else {
+                // User exists but no role assigned, or invalid credentials
+                UserEntity user = userService.signInUser(email, password);
+                if (user != null) {
+                    // User exists but has no role - return user info with null role
+                    return ResponseEntity.ok(Map.of(
+                        "role_name", "USER",
+                        "role_desc", "Default User Role",
+                        "id", user.getId() != null ? user.getId() : 0L
+                    ));
+                }
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", "Invalid email or password"));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(Map.of("error", "An error occurred: " + e.getMessage()));
         }
     }
 
