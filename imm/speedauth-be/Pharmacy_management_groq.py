@@ -467,7 +467,7 @@ async def shutdown_event():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(
-        "Pharmacy_backend_groq:app",
+        "Pharmacy_management_groq:app",
         host=config.HOST,
         port=config.PORT,
         reload=True,

@@ -817,4 +817,10 @@ async def general_exception_handler(request: Request, exc: Exception):
 # ======================== Main Entry Point ========================
 
 if __name__ == "__main__":
-    uvicorn.run("discharge_planning_groq:app", host=config.HOST, port=config.PORT, reload=True, log_level="info")
+    uvicorn.run(
+        "Discharge_planning_groq:app",
+        host=config.HOST,
+        port=config.PORT,
+        reload=True,
+        log_level="info"
+    )
