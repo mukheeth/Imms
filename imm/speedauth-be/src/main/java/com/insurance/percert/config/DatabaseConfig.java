@@ -33,6 +33,10 @@ public class DatabaseConfig {
         String password = dbUri.getUserInfo().split(":")[1];
         String host = dbUri.getHost();
         int port = dbUri.getPort();
+        // Default to PostgreSQL port 5432 if port is not specified (-1)
+        if (port == -1) {
+            port = 5432;
+        }
         String dbName = dbUri.getPath().replaceFirst("/", "");
         
         // Convert to JDBC format
