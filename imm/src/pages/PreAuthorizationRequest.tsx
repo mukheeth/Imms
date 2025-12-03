@@ -448,8 +448,13 @@ function PreAuthorizationRequest({ onNavigate }: PreAuthProps) {
 
   const getPat = async () => {
     try {
-      if (!patientId) return;
-      const ordersRes = await fetch(`${API_BASE_URL}/orders/exists?patId=${patientId}`);
+      const trimmedId = (patientId || '').trim();
+      if (!trimmedId) return;
+
+      // Use trimmed claim ID for all backend calls to avoid leading/trailing space issues
+      const encodedId = encodeURIComponent(trimmedId);
+
+      const ordersRes = await fetch(`${API_BASE_URL}/orders/exists?patId=${encodedId}`);
       const orders = ordersRes.ok ? await ordersRes.json() : [];
       if (orders.length > 0) {
         const firstOrder = orders[0];
@@ -503,7 +508,7 @@ function PreAuthorizationRequest({ onNavigate }: PreAuthProps) {
         }
       }
 
-      const patientRes = await fetch(`${API_BASE_URL}/patient/${patientId}`);
+      const patientRes = await fetch(`${API_BASE_URL}/patient/${encodedId}`);
       if (patientRes.ok) {
         const p = await patientRes.json();
         setPatientName(p.fullName || '');
