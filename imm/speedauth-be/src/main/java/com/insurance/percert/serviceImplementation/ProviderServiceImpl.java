@@ -135,7 +135,8 @@ public class ProviderServiceImpl implements ProviderService {
 
     @Override
     public ProviderEntity getUniqueProviderByNpiNumber(String npiNumber) {
-        return providerRepository.findByNpiNumber(npiNumber).get();
+        Optional<ProviderEntity> provider = providerRepository.findByNpiNumber(npiNumber);
+        return provider.orElse(null);
     }
 
     @Override
