@@ -22,8 +22,7 @@ import com.insurance.percert.service.OrderService;
 
 @RestController
 @RequestMapping("/orders")
-// @CrossOrigin(origins="https://speedauth.com")
-@CrossOrigin(origins="http://localhost:3000")
+@CrossOrigin(origins = "*") // CORS handled globally by CorsConfig
 public class OrderController {
     @Autowired
     private OrderService orderService;

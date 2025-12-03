@@ -22,26 +22,31 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_id")
     private Long orderId;
 
-    @Column(nullable = false)
+    @Column(name = "order_date", nullable = false)
     private Date orderDate;
 
-    @Column(nullable = false)
+    @Column(name = "from_date_of_service", nullable = false)
     private LocalDate fromDateOfService;
 
-    @Column(nullable = false)
+    @Column(name = "to_date_of_service", nullable = false)
     private LocalDate toDateOfService;
 
-    @Column(nullable = false)
+    @Column(name = "order_type", nullable = false)
     private String orderType;
 
+    @Column(name = "order_description")
     private String orderDescription;
 
+    @Column(name = "order_priority")
     private String orderPriority;
 
+    @Column(name = "order_icd_code")
     private String orderIcdCode;
 
+    @Column(name = "order_cpt_code")
     private String orderCptCode;
 
     // Map explicitly to the existing PostgreSQL column "orderjcode"
@@ -50,26 +55,51 @@ public class Order {
     @Column(name = "orderjcode")
     private String orderJCode;
 
+    @Column(name = "order_status")
     private String orderStatus;
 
+    @Column(name = "units")
     private int units;
+    
+    @Column(name = "uniquepatient_i")
     private String uniquepatientI;
+    
+    @Column(name = "provider_npi_number")
     private String providerNpiNumber;
+    
+    @Column(name = "insurance_id")
     private String insuranceId;
+    
+    @Column(name = "provider_name")
     private String providerName;
 
+    @Column(name = "icddrugname")
     private String icddrugname;
+    
+    @Column(name = "icddrugdescription")
     private String icddrugdescription;
+    
+    @Column(name = "icddrugamtdispensed")
     private String icddrugamtdispensed;
+    
+    @Column(name = "icddrugamtdispensed_type")
     private String icddrugamtdispensedType;
 
+    @Column(name = "icdnumberofchempresent")
     private String icdnumberofchempresent;
+    
+    @Column(name = "icddrug_type")
     private String icddrugType;
+    
+    @Column(name = "icddrugunits")
     private String icddrugunits;
+    
     // it is like precertificationtype in patient no like that
     // private String requestType;
+    @Column(name = "precertification_type")
     private String precertificationType;
 
+    @Column(name = "deleted_status")
     private boolean deletedStatus;
 
     // @ManyToOne
