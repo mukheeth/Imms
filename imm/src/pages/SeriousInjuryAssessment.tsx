@@ -376,7 +376,10 @@ function SeriousInjuryAssessmentPage({ onNavigate }: SeriousInjuryAssessmentPage
 
       const response = await fetch(`${DISCHARGE_API}/generate-discharge-plan-groq`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
         body: JSON.stringify(payload),
       });
       console.log('✅ API Response Status:', response.status);
@@ -440,9 +443,18 @@ function SeriousInjuryAssessmentPage({ onNavigate }: SeriousInjuryAssessmentPage
       };
       const resp = await fetch(`${HOSPITAL_CASE_API}/generate-case-summary-groq`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
         body: JSON.stringify(payload),
       });
+      
+      if (!resp.ok) {
+        const errorText = await resp.text();
+        throw new Error(`Failed to generate case summary: ${resp.status} ${errorText}`);
+      }
+      
       const summary = await resp.json();
       // Persist to sessionStorage for the Cases page to read
       sessionStorage.setItem('imms.caseSummary', JSON.stringify(summary));
@@ -456,7 +468,9 @@ function SeriousInjuryAssessmentPage({ onNavigate }: SeriousInjuryAssessmentPage
         alert('Initiating treatment review...');
       }
     } catch (e) {
-      console.error(e);
+      console.error('Failed to generate case summary:', e);
+      const errorMessage = e instanceof Error ? e.message : 'Failed to generate case summary. Please check the console for details.';
+      alert(errorMessage);
     }
   };
 

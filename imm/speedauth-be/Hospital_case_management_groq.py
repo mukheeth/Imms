@@ -71,8 +71,8 @@ class Config:
     # Backend Integration
     BACKEND_URL: str = os.getenv("BACKEND_URL", "http://localhost:8082")
 
-    # CORS Configuration
-    CORS_ORIGINS: List[str] = ["http://localhost:3000", "http://localhost:8082"]
+    # CORS Configuration - Allow all origins for Render deployment
+    CORS_ORIGINS: List[str] = ["*"]
 
     # Feature Flags
     ENABLE_MOCK_MODE: bool = False  # Set to True for testing without API calls
