@@ -529,7 +529,13 @@ function PreAuthorizationRequest({ onNavigate }: PreAuthProps) {
   };
 
   useEffect(() => {
-    if (patientId) {
+    const trimmedId = patientId?.trim();
+    if (trimmedId && trimmedId !== patientId) {
+      // If patientId has leading/trailing spaces, update it to trimmed version
+      setPatientId(trimmedId);
+      return;
+    }
+    if (trimmedId) {
       getPat();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -787,7 +793,7 @@ function PreAuthorizationRequest({ onNavigate }: PreAuthProps) {
                       style={input}
                       placeholder="RAF123456789"
                       value={patientId}
-                      onChange={(e) => setPatientId(e.target.value)}
+                      onChange={(e) => setPatientId(e.target.value.trim())}
                       onFocus={(e) => {
                         e.currentTarget.style.borderColor = '#4A90E2';
                         e.currentTarget.style.boxShadow = '0 0 0 3px rgba(74, 144, 226, 0.1)';
@@ -859,7 +865,7 @@ function PreAuthorizationRequest({ onNavigate }: PreAuthProps) {
                               onMouseDown={(e) => {
                                 e.preventDefault();
                                 setPatientName(name);
-                                if (pid) setPatientId(String(pid));
+                                if (pid) setPatientId(String(pid).trim());
                                 setShowPatientSuggestions(false);
                               }}
                             >
