@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { apiService, SeriousInjuryAssessment } from '../services/api';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8082';
-const HOSPITAL_CASE_API = process.env.REACT_APP_HOSPITAL_CASE_API || 'http://localhost:5052';
-const DISCHARGE_API = process.env.REACT_APP_DISCHARGE_API || 'http://localhost:5053';
+// Base URLs for Groq services (without endpoint paths)
+const HOSPITAL_CASE_API = process.env.REACT_APP_HOSPITAL_CASE_API || 'https://imms.onrender.com';
+const DISCHARGE_API = process.env.REACT_APP_DISCHARGE_API || 'https://imms-discharge.onrender.com';
+const PHARMACY_API = process.env.REACT_APP_PHARMACY_API || 'https://imms-pharmacy.onrender.com';
 
 const DISCHARGE_PLAN_KEY = 'imms.dischargePlan';
 const DISCHARGE_CONTEXT_KEY = 'imms.dischargePlanContext';
@@ -987,11 +989,11 @@ function SeriousInjuryAssessmentPage({ onNavigate }: SeriousInjuryAssessmentPage
 
                                   console.log('Calling pharmacy API with:', requestPayload);
 
-                                  const pharmacyApiUrl = process.env.REACT_APP_PHARMACY_API || 'http://localhost:8081';
-                                  const response = await fetch(`${pharmacyApiUrl}/generate_prescription_safe_groq`, {
+                                  const response = await fetch(`${PHARMACY_API}/generate_prescription_safe_groq`, {
                                     method: 'POST',
                                     headers: {
                                       'Content-Type': 'application/json',
+                                      'Accept': 'application/json'
                                     },
                                     body: JSON.stringify(requestPayload),
                                   });
