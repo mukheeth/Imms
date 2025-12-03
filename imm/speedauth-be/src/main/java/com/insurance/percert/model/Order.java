@@ -44,6 +44,10 @@ public class Order {
 
     private String orderCptCode;
 
+    // Map explicitly to the existing PostgreSQL column "orderjcode"
+    // (lowercase, from the original MySQL schema). Without this,
+    // Hibernate tries to use "orderJCode", which does not exist.
+    @Column(name = "orderjcode")
     private String orderJCode;
 
     private String orderStatus;
