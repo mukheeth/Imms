@@ -1,11 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import { apiService, SeriousInjuryAssessment } from '../services/api';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8082';
-// Base URLs for Groq services (without endpoint paths)
-const HOSPITAL_CASE_API = process.env.REACT_APP_HOSPITAL_CASE_API || 'https://imms.onrender.com';
-const DISCHARGE_API = process.env.REACT_APP_DISCHARGE_API || 'https://imms-discharge.onrender.com';
-const PHARMACY_API = process.env.REACT_APP_PHARMACY_API || 'https://imms-pharmacy.onrender.com';
+// Helper function to normalize URLs (remove trailing slashes)
+const normalizeUrl = (url: string): string => {
+  return url?.replace(/\/+$/, '') || '';
+};
+
+const API_BASE_URL = normalizeUrl(process.env.REACT_APP_API_BASE_URL || 'http://localhost:8082');
+
+// Get base URLs for Groq services
+// If env var already includes endpoint path, use it as-is; otherwise append endpoint
+const getHospitalCaseUrl = () => {
+  const base = normalizeUrl(process.env.REACT_APP_HOSPITAL_CASE_API || 'https://imms.onrender.com');
+  // If it already contains the endpoint path, return as-is
+  if (base.includes('/generate-case-summary-groq')) {
+    return base;
+  }
+  return `${base}/generate-case-summary-groq`;
+};
+
+const getDischargeUrl = () => {
+  const base = normalizeUrl(process.env.REACT_APP_DISCHARGE_API || 'https://imms-discharge.onrender.com');
+  // If it already contains the endpoint path, return as-is
+  if (base.includes('/generate-discharge-plan-groq')) {
+    return base;
+  }
+  return `${base}/generate-discharge-plan-groq`;
+};
+
+const getPharmacyUrl = () => {
+  const base = normalizeUrl(process.env.REACT_APP_PHARMACY_API || 'https://imms-pharmacy.onrender.com');
+  // If it already contains the endpoint path, return as-is
+  if (base.includes('/generate_prescription_safe_groq')) {
+    return base;
+  }
+  return `${base}/generate_prescription_safe_groq`;
+};
 
 const DISCHARGE_PLAN_KEY = 'imms.dischargePlan';
 const DISCHARGE_CONTEXT_KEY = 'imms.dischargePlanContext';
@@ -374,9 +404,10 @@ function SeriousInjuryAssessmentPage({ onNavigate }: SeriousInjuryAssessmentPage
 
       setPlanError(null);
       setPlanLoading(true);
-      console.log(`✅ Calling API: ${DISCHARGE_API}/generate-discharge-plan-groq`);
+      const dischargeUrl = getDischargeUrl();
+      console.log(`✅ Calling API: ${dischargeUrl}`);
 
-      const response = await fetch(`${DISCHARGE_API}/generate-discharge-plan-groq`, {
+      const response = await fetch(dischargeUrl, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -443,7 +474,8 @@ function SeriousInjuryAssessmentPage({ onNavigate }: SeriousInjuryAssessmentPage
         patient_name: selectedAssessment.patientName,
         case_id: selectedAssessment.caseId,
       };
-      const resp = await fetch(`${HOSPITAL_CASE_API}/generate-case-summary-groq`, {
+      const caseSummaryUrl = getHospitalCaseUrl();
+      const resp = await fetch(caseSummaryUrl, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -989,7 +1021,8 @@ function SeriousInjuryAssessmentPage({ onNavigate }: SeriousInjuryAssessmentPage
 
                                   console.log('Calling pharmacy API with:', requestPayload);
 
-                                  const response = await fetch(`${PHARMACY_API}/generate_prescription_safe_groq`, {
+                                  const pharmacyUrl = getPharmacyUrl();
+                                  const response = await fetch(pharmacyUrl, {
                                     method: 'POST',
                                     headers: {
                                       'Content-Type': 'application/json',
