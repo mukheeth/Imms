@@ -25,15 +25,28 @@ public class ProviderEntity {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "provider_id")
     private long providerId;
+    
+    @Column(name = "provider_name")
     private String providerName;
+    
+    @Column(name = "first_name")
     private String firstName;
+    
+    @Column(name = "last_name")
     private String lastName;
     
-    @Column(unique = true)
+    @Column(name = "npi_number", unique = true)
     private String npiNumber;
+    
+    @Column(name = "provider_type")
     private String providerType;
+    
+    @Column(name = "provider_contact")
     private String providerContact;
+    
+    @Column(name = "tax_id")
     private String taxId;
 
     // @Column(unique = true, nullable = false) // Ensure npiNumber is unique

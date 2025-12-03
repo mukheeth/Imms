@@ -28,30 +28,73 @@ import java.util.*;
 public class PatientEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "patient_id")
     private long patientId;
 
-    @Column(unique = true)
+    @Column(name = "custom_patient_id", unique = true)
     private String customPatientId;
+    
+    @Column(name = "first_name")
     private String firstName;
+    
+    @Column(name = "last_name")
     private String lastName;
+    
+    @Column(name = "full_name")
     private String fullName;
+    
+    @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
+    
+    @Column(name = "gender")
     private String gender;
+    
+    @Column(name = "primary_insurance")
     private String primaryInsurance;
+    
+    @Column(name = "secondary_insurance")
     private String secondaryInsurance;
+    
+    @Column(name = "primary_policy_number")
     private String primaryPolicyNumber;
+    
+    @Column(name = "secondary_policy_number")
     private String secondaryPolicyNumber;
+    
+    @Column(name = "contact_number")
     private String contactNumber;
+    
+    @Column(name = "insurance_id")
     private String insuranceId;
+    
+    @Column(name = "facility_name")
     private String facilityName;
+    
+    @Column(name = "facility_address")
     private String facilityAddress;
+    
+    @Column(name = "icd_code")
     private String icdCode;
+    
+    @Column(name = "procedure_code")
     private String procedureCode;
+    
+    @Column(name = "date_of_service")
     private String dateOfService;
+    
+    @Column(name = "from_date_of_service")
     private LocalDate fromDateOfService;
+    
+    @Column(name = "to_date_of_service")
     private LocalDate toDateOfService;
+    
+    @Column(name = "precertification_type")
     private String precertificationType;
+    
+    @Column(name = "description")
     private String description;
+    
+    @Column(name = "subscriber_id")
     private String subscriberId;
 
 
