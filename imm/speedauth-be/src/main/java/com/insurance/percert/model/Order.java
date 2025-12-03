@@ -61,7 +61,10 @@ public class Order {
     @Column(name = "units")
     private int units;
     
-    @Column(name = "uniquepatient_i")
+    // Note: due to the QuotedNamingStrategy, the original schema created a camelCase
+    // column named "uniquepatienti" (no underscore). We must map to that exact name
+    // to avoid "column ... does not exist" errors at runtime.
+    @Column(name = "uniquepatienti")
     private String uniquepatientI;
     
     @Column(name = "provider_npi_number")
